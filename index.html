@@ -5,152 +5,54 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>AUTO ZONE | كماليات السيارات</title>
     <style>
-        /* التنسيق العام للموقع */
         body {font-family: Tahoma, Arial, sans-serif; margin:0; background:#1c1c1c; color:#f5f5f5; line-height: 1.6;}
-        header {background:#0f0f0f; color:#f5c542; padding:40px 20px; text-align:center; border-bottom: 3px solid #f5c542}
-        header h1 {<!DOCTYPE html>
-<html lang="ar" dir="rtl">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>متجري الاحترافي</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body { background-color: #0f172a; color: white; font-family: sans-serif; }
-        .product-card { background: #1e293b; transition: transform 0.3s; border: 1px solid #334155; }
-        .product-card:hover { transform: translateY(-5px); border-color: #3b82f6; }
-    </style>
-</head>
-<body>
-
-    <nav class="p-4 border-b border-slate-700 flex justify-between items-center bg-slate-900 sticky top-0 z-50">
-        <img src="https://via.placeholder.com/150x50?text=LOGO" id="site-logo" class="h-10">
-        <h1 class="text-xl font-bold text-blue-400">AutoZon3</h1>
-    </nav>
-
-    <div class="container mx-auto p-6">
-        <div id="products-grid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <p class="text-center col-span-full">جاري تحميل المنتجات...</p>
-        </div>
-    </div>
-
-    <script>
-        // ضع رابط الـ CSV المخصص للشيت هنا
-        const sheetURL = 'رابط_شيت_جوجل_هنا';
-
-        async function loadProducts() {
-            try {
-                const response = await fetch(sheetURL);
-                const data = await response.text();
-                const rows = data.split('\n').slice(1); // تجاهل الصف الأول (العناوين)
-                const grid = document.getElementById('products-grid');
-                grid.innerHTML = '';
-
-                rows.forEach(row => {
-                    const columns = row.split(','); 
-                    if (columns.length >= 3) {
-                        const title = columns[0]; // العمود A
-                        const image = columns[1]; // العمود B
-                        const price = columns[2]; // العمود C
-                        const link  = columns[3]; // العمود D
-
-                        grid.innerHTML += `
-                            <div class="product-card rounded-xl overflow-hidden shadow-lg">
-                                <img src="${image}" class="w-full h-48 object-cover" alt="${title}">
-                                <div class="p-4">
-                                    <h3 class="font-bold text-lg mb-2">${title}</h3>
-                                    <p class="text-blue-400 font-bold mb-4">${price}</p>
-                                    <a href="${link}" target="_blank" class="block text-center bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition">شراء الآن</a>
-                                </div>
-                            </div>
-                        `;
-                    }
-                });
-            } catch (error) {
-                console.error('خطأ في تحميل البيانات:', error);
-                document.getElementById('products-grid').innerHTML = 'فشل تحميل المنتجات.';
-            }
-        }
-
-        loadProducts();
-    </script>
-</body>
-</html>
-">
-    <img src=<a href="https://ibb.co/39RN4QVy"><img src="https://i.ibb.co/39RN4QVy/5555.jpg" alt="5555" border="0"></a>" alt="Logo" style="max-height: 100px;">
-</div>; letter-spacing:2px; text-transform: uppercase;}
+        header {background:#0f0f0f; color:#f5c542; padding:30px 20px; text-align:center; border-bottom: 3px solid #f5c542}
         
+        /* تنسيق اللوجو */
+        #main-logo { max-height: 100px; margin-bottom: 15px; display: none; margin-left: auto; margin-right: auto; }
+        
+        header h1 {margin:0; font-size:30px; letter-spacing:2px; text-transform: uppercase;}
         .container {padding:40px 20px; max-width: 1100px; margin: auto;}
         h2 {color:#f5c542; text-align: center; margin-bottom: 30px; border-bottom: 1px solid #333; padding-bottom: 10px;}
-        
-        /* تنسيق شبكة المنتجات */
         .products {display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:25px}
         
-        /* تنسيق كارت المنتج */
         .card {
-            background:#111; 
-            border-radius:15px; 
-            padding:25px; 
-            box-shadow:0 10px 30px rgba(0,0,0,0.7); 
-            text-align: center; 
-            border: 1px solid #222;
-            transition: all 0.3s ease;
+            background:#111; border-radius:15px; overflow: hidden;
+            box-shadow:0 10px 30px rgba(0,0,0,0.7); text-align: center; 
+            border: 1px solid #222; transition: all 0.3s ease;
         }
         .card:hover {border-color: #f5c542; transform: translateY(-10px);}
-        .card h3 {margin:15px 0; color: #fff; font-size: 1.4em; min-height: 60px; display: flex; align-items: center; justify-content: center;}
         
-        /* تنسيق السعر */
+        .product-img { width: 100%; height: 200px; object-fit: cover; background: #222; }
+        .card-content { padding: 20px; }
+        .card h3 {margin:10px 0; color: #fff; font-size: 1.2em; min-height: 50px;}
+        
         .price {
-            color:#f5c542; 
-            font-weight:bold; 
-            font-size: 1.6em; 
-            display: block; 
-            margin-bottom: 25px;
-            background: rgba(245, 197, 66, 0.1);
-            padding: 10px;
-            border-radius: 8px;
+            color:#f5c542; font-weight:bold; font-size: 1.4em; display: block; 
+            margin-bottom: 20px; background: rgba(245, 197, 66, 0.1);
+            padding: 8px; border-radius: 8px;
         }
         
-        /* زر الواتساب */
         .btn {
-            display:block; 
-            background:#f5c542; 
-            color:#111; 
-            text-align:center; 
-            padding:15px; 
-            border-radius:10px; 
-            text-decoration:none; 
-            font-weight:bold;
-            font-size: 1.2em;
-            transition: 0.3s;
+            display:block; background:#f5c542; color:#111; text-align:center; 
+            padding:12px; border-radius:10px; text-decoration:none; font-weight:bold;
         }
-        .btn:hover {background:#ffd966; box-shadow: 0 5px 15px rgba(245, 197, 66, 0.3);}
-
-        /* رسالة التحميل */
-        .loading-box { text-align: center; padding: 100px; font-size: 1.5em; color: #f5c542; font-weight: bold; }
-        
-        footer {background:#0f0f0f; text-align: center; padding: 30px; color: #666; margin-top: 50px; border-top: 1px solid #222;}
+        .loading-box { text-align: center; padding: 100px; font-size: 1.5em; color: #f5c542; }
+        footer {background:#0f0f0f; text-align: center; padding: 30px; color: #666; margin-top: 50px;}
     </style>
 </head>
 <body>
 
 <header>
-    <h1>AUTO ZONE</h1>
+    <img src="" id="main-logo" alt="Logo">
+    <h1 id="site-title">AUTO ZONE</h1>
     <p>🚀 أقوى كماليات السيارات في مصر</p>
 </header>
 
 <div class="container">
     <h2>🔥 عروضنا الحالية</h2>
-    
-    <div id="loading" class="loading-box">جاري تحديث الأسعار والمنتجات...</div>
-    
-    <div class="products" id="product-list">
-        </div>
-</div>
-
-<div class="container" style="text-align: center; background: #111; border-radius: 15px; margin-bottom: 40px;">
-    <h3 style="color: #f5c542;">عن AUTO ZONE</h3>
-    <p>نحن نوفر لك أفضل خامات كماليات السيارات وتعديل المظهر بأفضل الأسعار. اطلب الآن ليصلك المنتج أينما كنت.</p>
+    <div id="loading" class="loading-box">جاري تحميل المعرض...</div>
+    <div class="products" id="product-list"></div>
 </div>
 
 <footer>
@@ -158,65 +60,53 @@
 </footer>
 
 <script>
-    // رابط جدولك الشخصي (بصيغة القراءة البرمجية)
     const sheetId = '12cfNYa-jFCzKvPnhEHCXJBsDRpEE-ZVLnzhrPUbr9k0';
     const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv`;
 
     async function fetchProducts() {
         try {
             const response = await fetch(csvUrl);
-            if (!response.ok) throw new Error('Network response was not ok');
             const data = await response.text();
-            
-            // تقسيم البيانات لصفوف
             const rows = data.split('\n').slice(1); 
             const productList = document.getElementById('product-list');
-            const loading = document.getElementById('loading');
+            const logoImg = document.getElementById('main-logo');
             
-            loading.style.display = 'none';
-            productList.innerHTML = '';
+            document.getElementById('loading').style.display = 'none';
 
-            rows.forEach(row => {
-                // تنظيف البيانات من علامات التنصيص الزائدة
+            rows.forEach((row, index) => {
                 const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(col => col.replace(/^"(.*)"$/, '$1').trim());
                 
-                // التأكد أن الصف يحتوي على اسم وسعر
-                if (cols.length >= 2 && cols[0] !== "") {
-                    const name = cols[0];  
-                    const price = cols[1]; 
+                if (cols.length >= 2) {
+                    const name = cols[0];      // العمود A
+                    const price = cols[1];     // العمود B
+                    const imgUrl = cols[2];    // العمود C (صورة المنتج)
+                    const logoUrl = cols[3];   // العمود D (اللوجو)
+
+                    // تحديث اللوجو من أول صف فقط
+                    if (index === 0 && logoUrl) {
+                        logoImg.src = logoUrl;
+                        logoImg.style.display = 'block';
+                    }
                     
                     const cardHTML = `
                         <div class="card">
-                            <h3>${name}</h3>
-                            <span class="price">${price}</span>
-                            <a class="btn" href="https://wa.me/201040326645?text=استفسار عن سعر ${name}">اطلب عبر واتساب</a>
+                            <img src="${imgUrl}" class="product-img" onerror="this.src='https://via.placeholder.com/300x200?text=No+Image'">
+                            <div class="card-content">
+                                <h3>${name}</h3>
+                                <span class="price">${price}</span>
+                                <a class="btn" href="https://wa.me/201040326645?text=استفسار عن: ${name}">اطلب عبر واتساب</a>
+                            </div>
                         </div>
                     `;
                     productList.innerHTML += cardHTML;
                 }
             });
-
-            if(productList.innerHTML === "") {
-                loading.innerText = "لا توجد منتجات حالياً في الجدول.";
-                loading.style.display = 'block';
-            }
-
         } catch (error) {
-            document.getElementById('loading').innerHTML = `
-                <div style="color: #ff4d4d;">
-                    ⚠️ فشل في الاتصال بالجدول.<br>
-                    تأكد من فتح الجدول واختيار:<br>
-                    File -> Share -> Publish to Web -> Publish
-                </div>`;
-            console.error('Error:', error);
+            document.getElementById('loading').innerText = "خطأ في الاتصال بالشيت.";
         }
     }
-
-    // بدء العملية
     fetchProducts();
 </script>
-
 </body>
-
 </html>
 
