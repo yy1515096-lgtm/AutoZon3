@@ -8,7 +8,75 @@
         /* التنسيق العام للموقع */
         body {font-family: Tahoma, Arial, sans-serif; margin:0; background:#1c1c1c; color:#f5f5f5; line-height: 1.6;}
         header {background:#0f0f0f; color:#f5c542; padding:40px 20px; text-align:center; border-bottom: 3px solid #f5c542}
-        header h1 {<div style="text-align: center; padding: 20px;">
+        header h1 {<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>متجري الاحترافي</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body { background-color: #0f172a; color: white; font-family: sans-serif; }
+        .product-card { background: #1e293b; transition: transform 0.3s; border: 1px solid #334155; }
+        .product-card:hover { transform: translateY(-5px); border-color: #3b82f6; }
+    </style>
+</head>
+<body>
+
+    <nav class="p-4 border-b border-slate-700 flex justify-between items-center bg-slate-900 sticky top-0 z-50">
+        <img src="https://via.placeholder.com/150x50?text=LOGO" id="site-logo" class="h-10">
+        <h1 class="text-xl font-bold text-blue-400">AutoZon3</h1>
+    </nav>
+
+    <div class="container mx-auto p-6">
+        <div id="products-grid" class="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            <p class="text-center col-span-full">جاري تحميل المنتجات...</p>
+        </div>
+    </div>
+
+    <script>
+        // ضع رابط الـ CSV المخصص للشيت هنا
+        const sheetURL = 'رابط_شيت_جوجل_هنا';
+
+        async function loadProducts() {
+            try {
+                const response = await fetch(sheetURL);
+                const data = await response.text();
+                const rows = data.split('\n').slice(1); // تجاهل الصف الأول (العناوين)
+                const grid = document.getElementById('products-grid');
+                grid.innerHTML = '';
+
+                rows.forEach(row => {
+                    const columns = row.split(','); 
+                    if (columns.length >= 3) {
+                        const title = columns[0]; // العمود A
+                        const image = columns[1]; // العمود B
+                        const price = columns[2]; // العمود C
+                        const link  = columns[3]; // العمود D
+
+                        grid.innerHTML += `
+                            <div class="product-card rounded-xl overflow-hidden shadow-lg">
+                                <img src="${image}" class="w-full h-48 object-cover" alt="${title}">
+                                <div class="p-4">
+                                    <h3 class="font-bold text-lg mb-2">${title}</h3>
+                                    <p class="text-blue-400 font-bold mb-4">${price}</p>
+                                    <a href="${link}" target="_blank" class="block text-center bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-lg transition">شراء الآن</a>
+                                </div>
+                            </div>
+                        `;
+                    }
+                });
+            } catch (error) {
+                console.error('خطأ في تحميل البيانات:', error);
+                document.getElementById('products-grid').innerHTML = 'فشل تحميل المنتجات.';
+            }
+        }
+
+        loadProducts();
+    </script>
+</body>
+</html>
+">
     <img src=<a href="https://ibb.co/39RN4QVy"><img src="https://i.ibb.co/39RN4QVy/5555.jpg" alt="5555" border="0"></a>" alt="Logo" style="max-height: 100px;">
 </div>; letter-spacing:2px; text-transform: uppercase;}
         
@@ -151,3 +219,4 @@
 </body>
 
 </html>
+
