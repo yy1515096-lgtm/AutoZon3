@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AUTO ZONE | كماليات السيارات</title>
+    <style>
+        /* التنسيق العام للموقع */
+        body {font-family: Tahoma, Arial, sans-serif; margin:0; background:#1c1c1c; color:#f5f5f5; line-height: 1.6;}
+        header {background:#0f0f0f; color:#f5c542; padding:40px 20px; text-align:center; border-bottom: 3px solid #f5c542}
+        header h1 {margin:0; font-size:35px; letter-spacing:2px; text-transform: uppercase;}
+        
+        .container {padding:40px 20px; max-width: 1100px; margin: auto;}
+        h2 {color:#f5c542; text-align: center; margin-bottom: 30px; border-bottom: 1px solid #333; padding-bottom: 10px;}
+        
+        /* تنسيق شبكة المنتجات */
+        .products {display:grid; grid-template-columns:repeat(auto-fit,minmax(280px,1fr)); gap:25px}
+        
+        /* تنسيق كارت المنتج */
+        .card {
+            background:#111; 
+            border-radius:15px; 
+            padding:25px; 
+            box-shadow:0 10px 30px rgba(0,0,0,0.7); 
+            text-align: center; 
+            border: 1px solid #222;
+            transition: all 0.3s ease;
+        }
+        .card:hover {border-color: #f5c542; transform: translateY(-10px);}
+        .card h3 {margin:15px 0; color: #fff; font-size: 1.4em; min-height: 60px; display: flex; align-items: center; justify-content: center;}
+        
+        /* تنسيق السعر */
+        .price {
+            color:#f5c542; 
+            font-weight:bold; 
+            font-size: 1.6em; 
+            display: block; 
+            margin-bottom: 25px;
+            background: rgba(245, 197, 66, 0.1);
+            padding: 10px;
+            border-radius: 8px;
+        }
+        
+        /* زر الواتساب */
+        .btn {
+            display:block; 
+            background:#f5c542; 
+            color:#111; 
+            text-align:center; 
+            padding:15px; 
+            border-radius:10px; 
+            text-decoration:none; 
+            font-weight:bold;
+            font-size: 1.2em;
+            transition: 0.3s;
+        }
+        .btn:hover {background:#ffd966; box-shadow: 0 5px 15px rgba(245, 197, 66, 0.3);}
+
+        /* رسالة التحميل */
+        .loading-box { text-align: center; padding: 100px; font-size: 1.5em; color: #f5c542; font-weight: bold; }
+        
+        footer {background:#0f0f0f; text-align: center; padding: 30px; color: #666; margin-top: 50px; border-top: 1px solid #222;}
+    </style>
+</head>
+<body>
+
+<header>
+    <h1>AUTO ZONE</h1>
+    <p>🚀 أقوى كماليات السيارات في مصر</p>
+</header>
+
+<div class="container">
+    <h2>🔥 عروضنا الحالية</h2>
+    
+    <div id="loading" class="loading-box">جاري تحديث الأسعار والمنتجات...</div>
+    
+    <div class="products" id="product-list">
+        </div>
+</div>
+
+<div class="container" style="text-align: center; background: #111; border-radius: 15px; margin-bottom: 40px;">
+    <h3 style="color: #f5c542;">عن AUTO ZONE</h3>
+    <p>نحن نوفر لك أفضل خامات كماليات السيارات وتعديل المظهر بأفضل الأسعار. اطلب الآن ليصلك المنتج أينما كنت.</p>
+</div>
+
+<footer>
+    <p>© 2025 AUTO ZONE - جميع الحقوق محفوظة</p>
+</footer>
+
+<script>
+    // رابط جدولك الشخصي (بصيغة القراءة البرمجية)
+    const sheetId = '12cfNYa-jFCzKvPnhEHCXJBsDRpEE-ZVLnzhrPUbr9k0';
+    const csvUrl = `https://docs.google.com/spreadsheets/d/${sheetId}/gviz/tq?tqx=out:csv`;
+
+    async function fetchProducts() {
+        try {
+            const response = await fetch(csvUrl);
+            if (!response.ok) throw new Error('Network response was not ok');
+            const data = await response.text();
+            
+            // تقسيم البيانات لصفوف
+            const rows = data.split('\n').slice(1); 
+            const productList = document.getElementById('product-list');
+            const loading = document.getElementById('loading');
+            
+            loading.style.display = 'none';
+            productList.innerHTML = '';
+
+            rows.forEach(row => {
+                // تنظيف البيانات من علامات التنصيص الزائدة
+                const cols = row.split(/,(?=(?:(?:[^"]*"){2})*[^"]*$)/).map(col => col.replace(/^"(.*)"$/, '$1').trim());
+                
+                // التأكد أن الصف يحتوي على اسم وسعر
+                if (cols.length >= 2 && cols[0] !== "") {
+                    const name = cols[0];  
+                    const price = cols[1]; 
+                    
+                    const cardHTML = `
+                        <div class="card">
+                            <h3>${name}</h3>
+                            <span class="price">${price}</span>
+                            <a class="btn" href="https://wa.me/201040326645?text=استفسار عن سعر ${name}">اطلب عبر واتساب</a>
+                        </div>
+                    `;
+                    productList.innerHTML += cardHTML;
+                }
+            });
+
+            if(productList.innerHTML === "") {
+                loading.innerText = "لا توجد منتجات حالياً في الجدول.";
+                loading.style.display = 'block';
+            }
+
+        } catch (error) {
+            document.getElementById('loading').innerHTML = `
+                <div style="color: #ff4d4d;">
+                    ⚠️ فشل في الاتصال بالجدول.<br>
+                    تأكد من فتح الجدول واختيار:<br>
+                    File -> Share -> Publish to Web -> Publish
+                </div>`;
+            console.error('Error:', error);
+        }
+    }
+
+    // بدء العملية
+    fetchProducts();
+</script>
+
+</body>
+</html>
